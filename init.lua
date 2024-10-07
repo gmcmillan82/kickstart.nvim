@@ -102,7 +102,7 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -240,6 +240,7 @@ require('lazy').setup({
   --  This is equivalent to:
   --    require('Comment').setup({})
 
+  -- Replaced by native nvim feature `:h nvim-features`
   -- "gc" to comment visual regions/lines
   -- { 'numToStr/Comment.nvim', opts = {} },
 
@@ -276,47 +277,102 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
+  -- { -- Useful plugin to show you pending keybinds.
+  --   'folke/which-key.nvim',
+  --   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+  --   config = function() -- This is the function that runs, AFTER loading
+  --     require('which-key').setup {
+  --       plugins = {
+  --         marks = true,
+  --         registers = true,
+  --
+  --         presets = {
+  --           operators = true,
+  --           motions = true,
+  --           windows = true,
+  --           nav = true,
+  --         },
+  --       },
+  --     }
+  --
+  --     local wk = require 'which-key'
+  --     wk.add {
+  --       { '<leader>c', group = '[C]ode' },
+  --       { '<leader>c_', hidden = true },
+  --       { '<leader>d', group = '[D]ocument' },
+  --       { '<leader>d_', hidden = true },
+  --       { '<leader>h', group = 'Git [H]unk' },
+  --       { '<leader>h_', hidden = true },
+  --       { '<leader>n', group = '[N]eogit' },
+  --       { '<leader>n_', hidden = false },
+  --       { '<leader>r', group = '[R]ename' },
+  --       { '<leader>r_', hidden = true },
+  --       { '<leader>s', group = '[S]earch' },
+  --       { '<leader>s_', hidden = true },
+  --       { '<leader>t', group = '[T]oggle' },
+  --       { '<leader>t_', hidden = true },
+  --       { '<leader>w', group = '[W]orkspace' },
+  --       { '<leader>w_', hidden = true },
+  --       { '<leader>x', group = 'Trouble' },
+  --       { '<leader>_x', hidden = true },
+  --       { '<leader>h', desc = 'Git [H]unk', mode = 'v' },
+  --     }
+  --   end,
+  -- },
+
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup {
-        plugins = {
-          marks = true,
-          registers = true,
-
-          presets = {
-            operators = true,
-            motions = true,
-            windows = true,
-            nav = true,
-          },
+    opts = {
+      icons = {
+        -- set icon mappings to true if you have a Nerd Font
+        mappings = vim.g.have_nerd_font,
+        -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
+        -- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
+        keys = vim.g.have_nerd_font and {} or {
+          Up = '<Up> ',
+          Down = '<Down> ',
+          Left = '<Left> ',
+          Right = '<Right> ',
+          C = '<C-…> ',
+          M = '<M-…> ',
+          D = '<D-…> ',
+          S = '<S-…> ',
+          CR = '<CR> ',
+          Esc = '<Esc> ',
+          ScrollWheelDown = '<ScrollWheelDown> ',
+          ScrollWheelUp = '<ScrollWheelUp> ',
+          NL = '<NL> ',
+          BS = '<BS> ',
+          Space = '<Space> ',
+          Tab = '<Tab> ',
+          F1 = '<F1>',
+          F2 = '<F2>',
+          F3 = '<F3>',
+          F4 = '<F4>',
+          F5 = '<F5>',
+          F6 = '<F6>',
+          F7 = '<F7>',
+          F8 = '<F8>',
+          F9 = '<F9>',
+          F10 = '<F10>',
+          F11 = '<F11>',
+          F12 = '<F12>',
         },
-      }
+      },
 
-      local wk = require 'which-key'
-      wk.add {
-        { '<leader>c', group = '[C]ode' },
-        { '<leader>c_', hidden = true },
+      -- Document existing key chains
+      spec = {
+        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
-        { '<leader>d_', hidden = true },
-        { '<leader>h', group = 'Git [H]unk' },
-        { '<leader>h_', hidden = true },
         { '<leader>n', group = '[N]eogit' },
-        { '<leader>n_', hidden = false },
         { '<leader>r', group = '[R]ename' },
-        { '<leader>r_', hidden = true },
         { '<leader>s', group = '[S]earch' },
-        { '<leader>s_', hidden = true },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>t_', hidden = true },
         { '<leader>w', group = '[W]orkspace' },
-        { '<leader>w_', hidden = true },
-        { '<leader>x', group = 'Trouble' },
-        { '<leader>_x', hidden = true },
-        { '<leader>h', desc = 'Git [H]unk', mode = 'v' },
-      }
-    end,
+        { '<leader>t', group = '[T]oggle' },
+        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      },
+    },
   },
 
   -- NOTE: Plugins can specify dependencies.
@@ -385,6 +441,7 @@ require('lazy').setup({
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
+            require('telescope').load_extension 'neoclip',
           },
         },
       }
@@ -402,6 +459,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+      vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
@@ -674,13 +732,13 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
+        bash = { 'beautish' },
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        python = { 'black' },
+        rust = { 'rustfmt' },
+        go = { 'gofumpt', 'golines', 'goimports-reviser' },
+        terraform = { 'terraform_fmt' },
+        yaml = { 'yamlfmt' },
       },
     },
   },
@@ -796,24 +854,6 @@ require('lazy').setup({
     end,
   },
 
-  -- { -- You can easily change to a different colorscheme.
-  --   -- Change the name of the colorscheme plugin below, and then
-  --   -- change the command in the config to whatever the name of that colorscheme is.
-  --   --
-  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  --   'folke/tokyonight.nvim',
-  --   priority = 1000, -- Make sure to load this before all the other start plugins.
-  --   init = function()
-  --     -- Load the colorscheme here.
-  --     -- Like many other themes, this one has different styles, and you could load
-  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  --     -- vim.cmd.colorscheme 'tokyonight-night'
-  --
-  --     -- You can configure highlights by doing something like:
-  --     vim.cmd.hi 'Comment gui=none'
-  --   end,
-  -- },
-
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
@@ -900,8 +940,8 @@ require('lazy').setup({
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
