@@ -690,6 +690,7 @@ require('lazy').setup({
         'stylua',
         'yamlfix',
         'shellcheck',
+        'shfmt',
         'prettier',
         'beautysh',
         'gopls',
