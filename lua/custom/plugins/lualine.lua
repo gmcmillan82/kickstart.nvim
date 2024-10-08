@@ -19,6 +19,10 @@ return {
           },
           lualine_c = {},
         },
+        extensions = {
+          'oil',
+          'trouble',
+        },
       }
     end,
   },

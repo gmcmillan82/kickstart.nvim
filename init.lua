@@ -687,7 +687,16 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
+        'stylua',
+        'yamlfix',
+        'shellcheck',
+        'prettier',
+        'beautysh',
+        'gopls',
+        'yaml-language-server',
+        'terraform-ls',
+        'bash-language-server',
+        'black',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -898,7 +907,26 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'groovy', 'hcl', 'html', 'lua', 'luadoc', 'markdown', 'python', 'terraform', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'dockerfile',
+        'gitignore',
+        'go',
+        'groovy',
+        'html',
+        'json',
+        'lua',
+        'luadoc',
+        'markdown',
+        'python',
+        'terraform',
+        'toml',
+        'vim',
+        'vimdoc',
+        'yaml',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
