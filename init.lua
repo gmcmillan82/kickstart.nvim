@@ -661,6 +661,22 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
+        yamlls = {
+          settings = {
+            yaml = {
+              schemas = {
+                kubernetes = 'k8s-*.yaml',
+                ['http://json.schemastore.org/github-workflow'] = '.github/workflows/*',
+                ['http://json.schemastore.org/github-action'] = '.github/action.{yml,yaml}',
+                ['http://json.schemastore.org/ansible-stable-2.9'] = 'roles/tasks/**/*.{yml,yaml}',
+                ['http://json.schemastore.org/prettierrc'] = '.prettierrc.{yml,yaml}',
+                ['http://json.schemastore.org/kustomization'] = 'kustomization.{yml,yaml}',
+                ['http://json.schemastore.org/chart'] = 'Chart.{yml,yaml}',
+                ['http://json.schemastore.org/circleciconfig'] = '.circleci/**/*.{yml,yaml}',
+              },
+            },
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
@@ -862,6 +878,19 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
+          { name = 'vsnip' },
+          {
+            name = 'buffer',
+            option = {
+              get_bufnrs = function()
+                local bufs = {}
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                  bufs[vim.api.nvim_win_get_buf(win)] = true
+                end
+                return vim.tbl_keys(bufs)
+              end,
+            },
+          },
         },
       }
     end,
