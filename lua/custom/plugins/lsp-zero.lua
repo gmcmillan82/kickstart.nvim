@@ -41,17 +41,31 @@ return {
   },
 
   { 'neovim/nvim-lspconfig' },
+
+  -- luasnip engine + cmp_luasnip source
+  { 'L3MON4D3/LuaSnip' },
+  { 'saadparwaiz1/cmp_luasnip' },
+  { "rafamadriz/friendly-snippets" },
+
+  -- cmp completion sources
   { 'hrsh7th/cmp-nvim-lsp' },
+  { 'hrsh7th/cmp-buffer' },
 
   {
     'hrsh7th/nvim-cmp',
     config = function()
       local cmp = require('cmp')
       local cmp_action = require('lsp-zero').cmp_action()
+      local cmp_format = require('lsp-zero').cmp_format({ details = true })
+
+      require('luasnip.loaders.from_vscode').lazy_load()
 
       cmp.setup({
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'buffer' },
+          { name = 'luasnip' },
+          { name = 'cmp_luasnip' },
         },
         mapping = cmp.mapping.preset.insert({
           -- Navigate between completion items
@@ -74,9 +88,11 @@ return {
         }),
         snippet = {
           expand = function(args)
-            vim.snippet.expand(args.body)
+            require('luasnip').lsp_expand(args.body)
           end,
         },
+        -- (Optional) Show source name in completion menu
+        formatting = cmp_format,
       })
     end
   },
