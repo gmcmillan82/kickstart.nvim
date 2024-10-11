@@ -3,6 +3,19 @@ return {
   {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v4.x',
+    lazy = true,
+    config = false,
+  },
+
+  {
+    'neovim/nvim-lspconfig',
+    cmd = 'LspInfo',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-buffer' },
+    },
     config = function()
       -- lsp-zero configuration
       local lsp_zero = require 'lsp-zero'
@@ -40,8 +53,6 @@ return {
     end
   },
 
-  { 'neovim/nvim-lspconfig' },
-
   -- luasnip engine + cmp_luasnip source
   { 'L3MON4D3/LuaSnip' },
   { 'saadparwaiz1/cmp_luasnip' },
@@ -53,19 +64,25 @@ return {
 
   {
     'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    dependencies = {
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      'rafamadriz/friendly-snippets',
+    },
     config = function()
       local cmp = require('cmp')
       local cmp_action = require('lsp-zero').cmp_action()
       local cmp_format = require('lsp-zero').cmp_format({ details = true })
 
-      require('luasnip.loaders.from_vscode').lazy_load()
+      -- require('luasnip.loaders.from_vscode').lazy_load()
 
       cmp.setup({
         sources = {
-          { name = 'nvim_lsp' },
           { name = 'buffer' },
-          { name = 'luasnip' },
           { name = 'cmp_luasnip' },
+          { name = 'luasnip' },
+          { name = 'nvim_lsp' },
         },
         mapping = cmp.mapping.preset.insert({
           -- Navigate between completion items
@@ -99,6 +116,7 @@ return {
 
   {
     'williamboman/mason.nvim',
+    lazy = false,
     config = function()
       require('mason').setup({})
     end
@@ -108,7 +126,25 @@ return {
     'williamboman/mason-lspconfig.nvim',
     config = function()
       require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'rust_analyzer' },
+        ensure_installed = {
+          'ansiblelint',
+          'ansiblels',
+          'bashls',
+          'beautysh',
+          'black',
+          'gopls',
+          'lua_ls',
+          'prettier',
+          'pyright',
+          'rust_analyzer',
+          'shellcheck',
+          'terraformls',
+          'tflint',
+          'yamlfix',
+          'yamlfmt',
+          'yamllint',
+          'yamlls',
+        },
         handlers = {
           function(k8s)
             require('lspconfig')[k8s].setup({})
