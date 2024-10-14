@@ -4,6 +4,13 @@ return {
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     config = function()
+      local mode = {
+        'mode',
+        fmt = function(str)
+          return ' ' .. str
+          -- return ' ' .. str:sub(1, 1) -- displays only the first character of the mode
+        end,
+      }
       require('lualine').setup {
         options = {
           icons_enabled = true,
@@ -14,7 +21,7 @@ return {
         },
         sections = {
           lualine_a = {
-            'mode',
+            mode,
             'buffers',
           },
           lualine_c = {},
