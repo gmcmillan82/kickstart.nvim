@@ -8,7 +8,7 @@ return {
   },
   lazy = true,
   keys = {
-    { '<leader>ng', ':Neogit cwd=%:p:h<CR>', desc = 'Open neogit repository for current buffer' },
+    { '<leader>ng', ':Neogit cwd=%:p:h<CR>', noremap = true, silent = true, desc = 'Open neogit repository for current buffer' },
   },
   config = function()
     require('neogit').setup {
