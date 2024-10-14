@@ -35,7 +35,7 @@ vim.keymap.set('n', '<C-h>', ':wincmd h<CR>', opts)
 vim.keymap.set('n', '<C-l>', ':wincmd l<CR>', opts)
 
 -- sort lines
-vim.keymap.set('v', '<leader>S', ':sort<CR>', { desc = 'Sort selected lines' })
+vim.keymap.set('v', '<leader>s', ':sort<CR>', { desc = 'Sort selected lines' })
 
 -- Buffers
 vim.keymap.set('n', '<Tab>', ':bnext<CR>', opts)
