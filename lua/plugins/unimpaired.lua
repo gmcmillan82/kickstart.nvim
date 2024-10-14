@@ -1,7 +1,5 @@
 return {
-  {
-    'tummetott/unimpaired.nvim',
-    event = 'VeryLazy',
-    opts = {},
-  },
+  'tummetott/unimpaired.nvim',
+  event = 'VeryLazy',
+  opts = {},
 }
