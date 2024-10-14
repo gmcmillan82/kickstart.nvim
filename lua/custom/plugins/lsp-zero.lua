@@ -149,6 +149,9 @@ return {
           function(k8s)
             require('lspconfig')[k8s].setup({})
           end,
+          function(lualsp)
+            require('lspconfig')[lualsp].setup({})
+          end,
 
           yamlls = function()
             require('lspconfig').yamlls.setup({
@@ -163,6 +166,25 @@ return {
                     ['http://json.schemastore.org/kustomization'] = 'kustomization.{yml,yaml}',
                     ['http://json.schemastore.org/chart'] = 'Chart.{yml,yaml}',
                     ['http://json.schemastore.org/circleciconfig'] = '.circleci/**/*.{yml,yaml}',
+                  },
+                },
+              },
+            })
+          end,
+
+          luals = function()
+            require('lspconfig').lualsp.setup({
+              settings = {
+                Lua = {
+                  runtime = {
+                    version = 'LuaJIT',
+                  },
+                  diagnostics = {
+                    globals = { 'vim', 'require' },
+                    disable = { 'undefined-global' },
+                  },
+                  telemetry = {
+                    enable = false,
                   },
                 },
               },
