@@ -10,6 +10,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   require 'plugins.autocompletion',
+  require 'plugins.bufferline',
   require 'plugins.colorscheme',
   require 'plugins.copilot',
   require 'plugins.dashboard',

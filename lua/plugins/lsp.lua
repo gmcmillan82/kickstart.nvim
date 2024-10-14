@@ -183,6 +183,10 @@ return { -- LSP Configuration & Plugins
       --     },
       --   },
       -- },
+      ansiblels = {},
+      html = {},
+      jsonls = {},
+      rust_analyzer = {},
 
       lua_ls = {
         -- cmd = {...},
@@ -209,15 +213,13 @@ return { -- LSP Configuration & Plugins
         },
       },
 
-      terraformls = {
-        cmd = { 'terraform-ls', 'serve' },
-        filetypes = { 'hcl', 'tf', 'tfvars' },
-      },
+      terraformls = {},
 
       bashls = {
         cmd = { 'bash-language-server', 'start' },
         filetypes = { 'sh', 'bash' },
       },
+
     }
 
     -- Ensure the servers and tools above are installed
@@ -232,17 +234,23 @@ return { -- LSP Configuration & Plugins
     -- for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
-      'stylua',
-      'yamlfix',
+      'ansible-language-server',
+      'bash-language-server',
+      'beautysh',
+      'black',
+      'gopls',
+      'html-lsp',
+      'json-lsp',
+      'prettier',
+      'pyright',
+      'rust-analyzer',
       'shellcheck',
       'shfmt',
-      'prettier',
-      'beautysh',
-      'gopls',
-      'yaml-language-server',
+      'stylua',
       'terraform-ls',
-      'bash-language-server',
-      'black',
+      'tflint',
+      'yaml-language-server',
+      'yamlfix',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
