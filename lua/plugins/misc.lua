@@ -1,5 +1,6 @@
 return {
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  "nanotee/zoxide.vim",
   {
     'folke/todo-comments.nvim',
     event = 'VimEnter',
@@ -56,8 +57,5 @@ return {
 	-- },
 	--      }
     end,
-  },
-  {
-    "nanotee/zoxide.vim"
   }
 }
