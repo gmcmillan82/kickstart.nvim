@@ -24,7 +24,7 @@ return {
     vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
       pattern = { 'oil://*' },
       callback = function()
-        vim.keymap.set('n', '<leader>z', t.extensions.zoxide.list, { desc = 'Jump!', buffer = 0 })
+        vim.keymap.set('n', '<leader>Z', t.extensions.zoxide.list, { desc = 'Jump!', buffer = 0 })
       end,
     })
   end,

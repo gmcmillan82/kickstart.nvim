@@ -48,3 +48,6 @@ vim.keymap.set('n', '<Up>', ':resize -2<CR>', opts)
 vim.keymap.set('n', '<Down>', ':resize +2<CR>', opts)
 vim.keymap.set('n', '<Left>', ':vertical resize -2<CR>', opts)
 vim.keymap.set('n', '<Right>', ':vertical resize +2<CR>', opts)
+
+-- Zoxide
+vim.keymap.set("n", "<leader>z", "<cmd>Zi<CR>", { desc = "Open Zoxide" })
