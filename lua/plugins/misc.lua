@@ -12,6 +12,13 @@ return {
       signs = false
     }
   },
+  {
+    'stevearc/quicker.nvim',
+    event = "FileType qf",
+    ---@module "quicker"
+    ---@type quicker.SetupOptions
+    opts = {},
+  },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
@@ -46,16 +53,16 @@ return {
 
       require('mini.pairs').setup()
 
-	--      require('mini.indentscope').setup {
-	-- options = { try_as_border = true },
-	-- symbol = '│',
-	-- draw = {
-	--   delay = 200,
-	--   animation = function()
-	--     return 1
-	--   end,
-	-- },
-	--      }
+      require('mini.indentscope').setup {
+	options = { try_as_border = true },
+	symbol = '│',
+	draw = {
+	  delay = 200,
+	  animation = function()
+	    return 1
+	  end,
+	},
+      }
     end,
   }
 }

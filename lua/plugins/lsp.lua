@@ -145,6 +145,30 @@ return { -- LSP Configuration & Plugins
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+
+    vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+      pattern = {
+        "*/templates/*.yaml",
+        "*/templates/*.yml",
+        "*/templates/*.tpl",
+        "*.gotmpl",
+        "helmfile*.yaml",
+        "**/templates/**/*.yaml",
+        "**/templates/**/*.yml"
+      },
+      callback = function(_)  -- Using _ since we're not using the event param
+        vim.opt_local.filetype = "helm"
+        -- Just detach yamlls if it's attached
+        vim.schedule(function()
+          for _, client in ipairs(vim.lsp.get_clients()) do  -- Removed asterisks
+            if client.name == "yamlls" then
+              vim.lsp.buf_detach_client(0, client.id)  -- 0 means current buffer
+            end
+          end
+        end)
+      end,
+      group = vim.api.nvim_create_augroup("helm_filetype", { clear = true }),
+    })
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -167,22 +191,6 @@ return { -- LSP Configuration & Plugins
       -- But for many setups, the LSP (`tsserver`) will work just fine
       -- tsserver = {},
       --
-      -- yamlls = {
-      --   settings = {
-      --     yaml = {
-      --       schemas = {
-      --         kubernetes = 'k8s-*.yaml',
-      --         ['http://json.schemastore.org/github-workflow'] = '.github/workflows/*',
-      --         ['http://json.schemastore.org/github-action'] = '.github/action.{yml,yaml}',
-      --         ['http://json.schemastore.org/ansible-stable-2.9'] = 'roles/tasks/**/*.{yml,yaml}',
-      --         ['http://json.schemastore.org/prettierrc'] = '.prettierrc.{yml,yaml}',
-      --         ['http://json.schemastore.org/kustomization'] = 'kustomization.{yml,yaml}',
-      --         ['http://json.schemastore.org/chart'] = 'Chart.{yml,yaml}',
-      --         ['http://json.schemastore.org/circleciconfig'] = '.circleci/**/*.{yml,yaml}',
-      --       },
-      --     },
-      --   },
-      -- },
       ansiblels = {},
       html = {},
       jsonls = {},
@@ -213,6 +221,48 @@ return { -- LSP Configuration & Plugins
         },
       },
 
+      yamlls = {
+        settings = {
+          yaml = {
+            validate = true,
+            schemas = {
+              ["https://json.schemastore.org/helmfile.json"] = "helmfile*.yaml",
+              ["https://json.schemastore.org/chart.json"] = "Chart.yaml",
+            },
+            customTags = {
+              "!include_in_schema"
+            },
+            schemaStore = {
+              enable = true,
+              url = "https://www.schemastore.org/json",
+            },
+          }
+        },
+        filetypes = { "yaml", "yaml.docker-compose" },
+        before_init = function(_, config)
+          if vim.bo.filetype == "helm" then
+            return false
+          end
+        end,
+      },
+
+      helm_ls = {
+        settings = {
+          ['helm-ls'] = {
+            yamlls = {
+              path = "yaml-language-server",
+            },
+            diagnostics = {
+              validateYaml = false,
+              enable = true,
+            },
+            debug = true
+          }
+        },
+        filetypes = { 'helm' },
+        cmd = { "helm_ls", "serve" }
+      },
+
       terraformls = {},
 
       bashls = {
@@ -239,6 +289,7 @@ return { -- LSP Configuration & Plugins
       'beautysh',
       'black',
       'gopls',
+      'helm-ls',
       'html-lsp',
       'json-lsp',
       'prettier',
