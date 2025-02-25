@@ -145,7 +145,7 @@ return { -- LSP Configuration & Plugins
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-
+    -- This is a special case where we want to set the filetype of certain files to `helm`
     vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
       pattern = {
         "*/templates/*.yaml",
@@ -225,6 +225,9 @@ return { -- LSP Configuration & Plugins
         settings = {
           yaml = {
             validate = true,
+            format = {
+              enable = true
+            },
             schemas = {
               ["https://json.schemastore.org/helmfile.json"] = "helmfile*.yaml",
               ["https://json.schemastore.org/chart.json"] = "Chart.yaml",
@@ -243,6 +246,9 @@ return { -- LSP Configuration & Plugins
           if vim.bo.filetype == "helm" then
             return false
           end
+        end,
+        on_attach = function(client, bufnr)
+          client.server_capabilities.documentFormattingProvider = true
         end,
       },
 
