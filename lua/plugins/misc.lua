@@ -6,7 +6,7 @@ return {
     event = 'VimEnter',
     dependencies =
       {
-	'nvim-lua/plenary.nvim'
+        'nvim-lua/plenary.nvim'
       },
     opts = {
       signs = false
@@ -52,17 +52,6 @@ return {
       -- end
 
       require('mini.pairs').setup()
-
-      require('mini.indentscope').setup {
-	options = { try_as_border = true },
-	symbol = '│',
-	draw = {
-	  delay = 200,
-	  animation = function()
-	    return 1
-	  end,
-	},
-      }
     end,
   }
 }
