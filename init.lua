@@ -21,7 +21,7 @@ require('lazy').setup({
   require 'plugins.neotree',
   require 'plugins.oil',
   require 'plugins.snacks',
-  require 'plugins.treesitter',
+  require 'plugins.nvim-treesitter',
   require 'plugins.trouble',
   require 'plugins.unimpaired',
   require 'plugins.vim-tmux-navigator',
