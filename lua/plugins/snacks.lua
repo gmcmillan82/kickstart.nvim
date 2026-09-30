@@ -22,6 +22,7 @@ return {
     statuscolumn = { enabled = true },
     terminal = { enabled = false },
     words = { enabled = true },
+    gh = { enabled = true },
 
     picker = {
       enabled = true,
@@ -30,7 +31,8 @@ return {
       },
       matcher = {
         frecency = true
-      }
+      },
+      focus = "input"
     },
   },
   keys = {
@@ -40,6 +42,38 @@ return {
         Snacks.lazygit()
       end,
       desc = "Lazygit"
+    },
+    {
+      "<leader>gi",
+      function()
+        Snacks.picker.gh_issue()
+      end,
+      desc = "GitHub Issues (open)"
+    },
+    {
+      "<leader>gI",
+      function()
+        Snacks.picker.gh_issue({
+          state = "all"
+        })
+      end,
+      desc = "GitHub Issues (all)"
+    },
+    {
+      "<leader>gp",
+      function()
+        Snacks.picker.gh_pr()
+      end,
+      desc = "GitHub Pull Request (open)"
+    },
+    {
+      "<leader>gP",
+      function()
+        Snacks.picker.gh_pr({
+          state = "all"
+        })
+      end,
+      desc = "GitHub Pull Request (all)"
     },
     {
       "<leader>ss",
@@ -62,7 +96,6 @@ return {
       end,
       desc = "[N]eovim config"
     },
-
     {
       "<leader><leader>",
       function() Snacks.picker.buffers({
@@ -95,15 +128,6 @@ return {
         })
       end,
       desc = "[S]earch Git [B]ranches"
-    },
-    {
-      "<leader>sm",
-      function()
-        Snacks.picker.keymaps({
-          layout = "vertical",
-        })
-      end,
-      desc = "[S]earch [K]eymaps"
     },
     {
       "<leader>sl",
@@ -171,6 +195,6 @@ return {
         })
       end,
       desc = "[S]earch [Z]oxide"
-    }
-  },
+    },
+  }
 }
