@@ -2,7 +2,7 @@ require 'core.keymaps'
 require 'core.options'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
 end ---@diagnostic disable-next-line: undefined-field
@@ -14,7 +14,6 @@ require('lazy').setup({
   require 'plugins.colorscheme',
   require 'plugins.copilot',
   require 'plugins.gitsigns',
-  require 'plugins.hardtime',
   require 'plugins.lsp',
   require 'plugins.lualine',
   require 'plugins.misc',
@@ -26,6 +25,8 @@ require('lazy').setup({
   require 'plugins.unimpaired',
   require 'plugins.vim-tmux-navigator',
   require 'plugins.whichkey',
+}, {
+  rocks = { enabled = false },
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`

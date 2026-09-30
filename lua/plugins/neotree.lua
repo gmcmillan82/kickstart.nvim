@@ -8,7 +8,7 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '\\', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
+    { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal' },
   },
   opts = {
     filesystem = {
@@ -19,10 +19,10 @@ return {
       },
       filtered_items = {
         hide_dotfiles = false,
-        follow_current_file = {
-          enabled = true,
-        },
-      }
+      },
+      follow_current_file = {
+        enabled = true,
+      },
     },
   },
 }

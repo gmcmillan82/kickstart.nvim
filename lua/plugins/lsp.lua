@@ -10,9 +10,17 @@ return { -- LSP Configuration & Plugins
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
     { 'j-hui/fidget.nvim', opts = {} },
 
-    -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
-    { 'folke/neodev.nvim', opts = {} },
+    {
+      'folke/lazydev.nvim',
+      ft = 'lua',
+      opts = {
+        library = {
+          { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+        },
+      },
+    },
   },
   config = function()
     -- Brief aside: **What is LSP?**
@@ -52,8 +60,8 @@ return { -- LSP Configuration & Plugins
         --
         -- In this case, we create a function that lets us more easily define mappings specific
         -- for LSP related items. It sets the mode, buffer and description for us each time.
-        local map = function(keys, func, desc)
-          vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+        local map = function(keys, func, desc, opts)
+          vim.keymap.set('n', keys, func, vim.tbl_extend('force', { buffer = event.buf, desc = 'LSP: ' .. desc }, opts or {}))
         end
 
         -- Jump to the definition of the word under your cursor.
@@ -62,7 +70,8 @@ return { -- LSP Configuration & Plugins
         map('gd', require('snacks.picker').lsp_definitions, '[G]oto [D]efinition')
 
         -- Find references for the word under your cursor.
-        map('gr', require('snacks.picker').lsp_references, '[G]oto [R]eferences')
+        --  `nowait` stops Neovim waiting for its built-in `grr`/`grn`/... mappings.
+        map('gr', require('snacks.picker').lsp_references, '[G]oto [R]eferences', { nowait = true })
 
         -- Jump to the implementation of the word under your cursor.
         --  Useful when your language has ways of declaring types without an actual implementation.
@@ -259,7 +268,7 @@ return { -- LSP Configuration & Plugins
               path = "yaml-language-server",
             },
             diagnostics = {
-              validateYaml = false,
+              validateYaml = true,
               enable = true,
             },
             debug = true
