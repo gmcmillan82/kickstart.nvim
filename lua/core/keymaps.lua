@@ -32,9 +32,11 @@ vim.keymap.set('n', '<leader>se', '<C-w>=', opts) -- make split windows equal wi
 vim.keymap.set('v', '<leader>s', ':sort<CR>', { desc = 'Sort selected lines' })
 
 -- Buffers
-vim.keymap.set('n', '<Tab>', ':bnext<CR>', opts)
-vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', opts)
-vim.keymap.set('n', '<leader>x', ':Bdelete!<CR>', opts) -- close buffer
+vim.keymap.set('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>', opts)
+vim.keymap.set('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>', opts)
+vim.keymap.set('n', '<leader>x', function()
+  Snacks.bufdelete()
+end, { desc = 'Close buffer', silent = true })
 vim.keymap.set('n', '<leader>b', '<cmd> enew <CR>', opts) -- new buffer
 
 -- Resize splits with arrows

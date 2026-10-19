@@ -1,7 +1,11 @@
 return {
   'stevearc/oil.nvim',
+  lazy = false,
   opts = {},
   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  keys = {
+    { '<leader>o', '<cmd>Oil --float<CR>', desc = 'Open floating Oil browser' },
+  },
   config = function()
     require('oil').setup {
       default_file_explorer = true,

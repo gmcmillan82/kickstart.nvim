@@ -4,6 +4,24 @@ return {
   {
     'folke/todo-comments.nvim',
     event = 'VimEnter',
+    keys = {
+      {
+        ']T',
+        function()
+          require('todo-comments').jump_next()
+        end,
+        desc = 'Next TODO comment (Shift+T)',
+      },
+      {
+        '[T',
+        function()
+          require('todo-comments').jump_prev()
+        end,
+        desc = 'Previous TODO comment (Shift+T)',
+      },
+      { '<leader>st', '<cmd>Trouble todo<CR>', desc = 'Search TODO comments (t)' },
+      { '<leader>sT', '<cmd>TodoQuickFix<CR>', desc = 'TODO comments in quickfix (Shift+T)' },
+    },
     dependencies =
       {
         'nvim-lua/plenary.nvim'

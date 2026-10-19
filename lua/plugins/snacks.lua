@@ -27,6 +27,7 @@ return {
     picker = {
       enabled = true,
       layout = {
+        preset = "telescope",
         cycle = true
       },
       matcher = {
@@ -36,6 +37,43 @@ return {
     },
   },
   keys = {
+    {
+      "<leader>gr",
+      function()
+        Snacks.gitbrowse({ what = "repo" })
+      end,
+      desc = "Git Browse Repository"
+    },
+    {
+      "<leader>gb",
+      function()
+        Snacks.gitbrowse({ what = "branch" })
+      end,
+      desc = "Git Browse Branch"
+    },
+    {
+      "<leader>gf",
+      function()
+        Snacks.gitbrowse({ what = "file" })
+      end,
+      mode = { "n", "x" },
+      desc = "Git Browse File"
+    },
+    {
+      "<leader>gc",
+      function()
+        Snacks.gitbrowse({ what = "commit" })
+      end,
+      desc = "Git Browse Commit under Cursor"
+    },
+    {
+      "<leader>gF",
+      function()
+        Snacks.gitbrowse({ what = "permalink" })
+      end,
+      mode = { "n", "x" },
+      desc = "Git Browse File Permalink"
+    },
     {
       "<leader>lg",
       function()
@@ -123,9 +161,7 @@ return {
     {
       "<leader>sb",
       function()
-        Snacks.picker.git_branches({
-          layout = "select",
-        })
+        Snacks.picker.git_branches()
       end,
       desc = "[S]earch Git [B]ranches"
     },
@@ -137,64 +173,149 @@ return {
           format = "git_log",
           preview = "git_show",
           confirm = "git_checkout",
-          layout = "vertical",
         })
       end,
-      desc = "[S]earch Git [L]og"
+      desc = "[S]earch Git Log (l)"
+    },
+    {
+      "<leader>sf",
+      function()
+        Snacks.picker.git_log_file()
+      end,
+      desc = "[S]earch Git [F]ile History"
+    },
+    {
+      "<leader>sL",
+      function()
+        Snacks.picker.git_log_line()
+      end,
+      desc = "[S]earch Git Line History (Shift+L)"
     },
     {
       "<leader>sk",
       function()
-        Snacks.picker.keymaps({
-          layout = "vertical",
-        })
+        Snacks.picker.keymaps()
       end,
       desc = "[S]earch [K]eymaps"
     },
     {
       "<leader>sg",
       function()
-        Snacks.picker.grep({
-          layout = "vertical",
-        })
+        Snacks.picker.grep()
       end,
       desc = "[S]earch [G]rep"
     },
     {
       "<leader>sd",
       function()
-        Snacks.picker.diagnostics_buffer({
-          layout = "vertical",
-        })
+        Snacks.picker.diagnostics_buffer()
       end,
       desc = "[S]earch [D]iagnostics"
     },
     {
       "<leader>sq",
       function()
-        Snacks.picker.qflist({
-          layout = "vertical",
-        })
+        Snacks.picker.qflist()
       end,
       desc = "[S]earch [Q]uickfix"
     },
     {
       "<leader>sh",
       function()
-        Snacks.picker.help({
-          layout = "vertical",
-        })
+        Snacks.picker.help()
       end,
       desc = "[S]earch [H]elp"
     },
     {
       "<leader>sz",
       function()
-        Snacks.picker.zoxide({
-          layout = "vertical",
-        })
+        Snacks.picker.zoxide()
       end,
       desc = "[S]earch [Z]oxide"
+    },
+    {
+      "<leader>s?",
+      function()
+        Snacks.picker.pickers()
+      end,
+      desc = "Search available pickers (?)"
+    },
+    {
+      "<leader>sR",
+      function()
+        Snacks.picker.resume()
+      end,
+      desc = "Resume last picker (Shift+R)"
+    },
+    {
+      "<leader>sr",
+      function()
+        Snacks.picker.recent()
+      end,
+      desc = "Search recent files (r)"
+    },
+    {
+      "<leader>sS",
+      function()
+        Snacks.picker.smart()
+      end,
+      desc = "Smart file search (Shift+S)"
+    },
+    {
+      "<leader>s/",
+      function()
+        Snacks.picker.lines({ layout = { preset = "telescope", preview = true } })
+      end,
+      desc = "Search current buffer (/)"
+    },
+    {
+      "<leader>sw",
+      function()
+        Snacks.picker.grep_word()
+      end,
+      desc = "Search word under cursor (w)"
+    },
+    {
+      "<leader>sD",
+      function()
+        Snacks.picker.diagnostics()
+      end,
+      desc = "Search workspace diagnostics (Shift+D)"
+    },
+    {
+      '<leader>s"',
+      function()
+        Snacks.picker.registers()
+      end,
+      desc = 'Search registers (")'
+    },
+    {
+      "<leader>su",
+      function()
+        Snacks.picker.undo()
+      end,
+      desc = "Search undo history (u)"
+    },
+    {
+      "<leader>sc",
+      function()
+        Snacks.picker.command_history({ layout = { preset = "telescope" } })
+      end,
+      desc = "Search command history (c)"
+    },
+    {
+      "<leader>sN",
+      function()
+        Snacks.picker.notifications()
+      end,
+      desc = "Search notifications (Shift+N)"
+    },
+    {
+      "<leader>sp",
+      function()
+        Snacks.picker.projects()
+      end,
+      desc = "Search projects (p)"
     },
   }
 }

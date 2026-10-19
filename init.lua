@@ -13,6 +13,7 @@ require('lazy').setup({
   require 'plugins.bufferline',
   require 'plugins.colorscheme',
   require 'plugins.copilot',
+  require 'plugins.diffview',
   require 'plugins.gitsigns',
   require 'plugins.lsp',
   require 'plugins.lualine',
