@@ -20,7 +20,13 @@ return {
     quickfile = { enabled = true },
     scroll = { enabled = true },
     statuscolumn = { enabled = true },
-    terminal = { enabled = false },
+    terminal = {
+      enabled = true,
+      win = {
+        position = "bottom",
+        height = 0.3,
+      },
+    },
     words = { enabled = true },
     gh = { enabled = true },
 
@@ -37,6 +43,21 @@ return {
     },
   },
   keys = {
+    {
+      "<leader>tt",
+      function()
+        Snacks.terminal.toggle()
+      end,
+      desc = "Toggle terminal"
+    },
+    {
+      "<C-/>",
+      function()
+        Snacks.terminal.toggle()
+      end,
+      mode = { "n", "t" },
+      desc = "Toggle terminal"
+    },
     {
       "<leader>gr",
       function()
