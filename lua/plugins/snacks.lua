@@ -20,13 +20,7 @@ return {
     quickfile = { enabled = true },
     scroll = { enabled = true },
     statuscolumn = { enabled = true },
-    terminal = {
-      enabled = true,
-      win = {
-        position = "bottom",
-        height = 0.3,
-      },
-    },
+    terminal = { enabled = true },
     words = { enabled = true },
     gh = { enabled = true },
 
@@ -46,14 +40,14 @@ return {
     {
       "<leader>tt",
       function()
-        Snacks.terminal.toggle()
+        Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 0.3 } })
       end,
       desc = "Toggle terminal"
     },
     {
       "<C-/>",
       function()
-        Snacks.terminal.toggle()
+        Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 0.3 } })
       end,
       mode = { "n", "t" },
       desc = "Toggle terminal"
