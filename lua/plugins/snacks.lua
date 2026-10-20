@@ -1,3 +1,18 @@
+local function toggle_terminal()
+  local buf = vim.api.nvim_get_current_buf()
+  if vim.bo[buf].buftype == "terminal" then
+    for _, terminal in ipairs(Snacks.terminal.list()) do
+      if terminal.buf == buf then
+        terminal:hide()
+        return
+      end
+    end
+  end
+  local file = vim.api.nvim_buf_get_name(buf)
+  local cwd = vim.bo[buf].buftype == "" and file ~= "" and vim.fs.dirname(file) or vim.fn.getcwd()
+  Snacks.terminal.toggle(nil, { cwd = cwd, win = { position = "bottom", height = 0.3 } })
+end
+
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -39,16 +54,12 @@ return {
   keys = {
     {
       "<leader>tt",
-      function()
-        Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 0.3 } })
-      end,
+      toggle_terminal,
       desc = "Toggle terminal"
     },
     {
       "<C-/>",
-      function()
-        Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 0.3 } })
-      end,
+      toggle_terminal,
       mode = { "n", "t" },
       desc = "Toggle terminal"
     },
