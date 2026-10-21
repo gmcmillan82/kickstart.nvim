@@ -260,6 +260,13 @@ return { -- LSP Configuration & Plugins
       terraformls = {
         -- terraform-ls has no log-level control; keep its verbose trace off LSP stderr.
         cmd = { 'terraform-ls', 'serve', '-log-file', '/dev/null' },
+        root_dir = function(bufnr, on_dir)
+          local file = vim.api.nvim_buf_get_name(bufnr)
+          if vim.bo[bufnr].buftype ~= '' or file == '' or file:match('^%w[%w+.-]*://') then
+            return
+          end
+          on_dir(vim.fs.root(bufnr, { '.terraform', '.git' }) or vim.fs.dirname(file))
+        end,
       },
 
       bashls = {
@@ -309,6 +316,9 @@ return { -- LSP Configuration & Plugins
       vim.lsp.config(server_name, server)
     end
 
-    require('mason-lspconfig').setup {}
+    require('mason-lspconfig').setup {
+      -- TFLint runs through nvim-lint, not a second language-server process.
+      automatic_enable = { exclude = { 'tflint' } },
+    }
   end,
 }
