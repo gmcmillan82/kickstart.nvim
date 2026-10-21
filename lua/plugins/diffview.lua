@@ -2,7 +2,19 @@ return {
   'sindrets/diffview.nvim',
   dependencies = { 'nvim-lua/plenary.nvim' },
   cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewFileHistory', 'DiffviewToggleFiles', 'DiffviewFocusFiles', 'DiffviewRefresh' },
-  opts = {},
+  opts = {
+    keymaps = {
+      view = {
+        { 'n', 'q', '<cmd>DiffviewClose<CR>', { desc = 'Close Diffview' } },
+      },
+      file_panel = {
+        { 'n', 'q', '<cmd>DiffviewClose<CR>', { desc = 'Close Diffview' } },
+      },
+      file_history_panel = {
+        { 'n', 'q', '<cmd>DiffviewClose<CR>', { desc = 'Close Diffview' } },
+      },
+    },
+  },
   keys = {
     { '<leader>gdo', '<cmd>DiffviewOpen<CR>', desc = 'Open working-tree diff' },
     { '<leader>gds', '<cmd>DiffviewOpen --cached<CR>', desc = 'Staged changes' },
