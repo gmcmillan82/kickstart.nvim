@@ -163,9 +163,6 @@ return {
     {
       "<leader><leader>",
       function() Snacks.picker.buffers({
-        on_show = function()
-          vim.cmd.stopinsert()
-        end,
         finder = "buffers",
         format = "buffer",
         hidden = false,
