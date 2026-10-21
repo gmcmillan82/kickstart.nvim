@@ -19,6 +19,7 @@ return {
       },
       filtered_items = {
         hide_dotfiles = false,
+        always_show = { '.git', '.github' },
       },
       follow_current_file = {
         enabled = true,

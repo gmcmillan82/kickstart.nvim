@@ -1,3 +1,38 @@
+local function project_cwd()
+  local buf = vim.api.nvim_get_current_buf()
+  local file = vim.api.nvim_buf_get_name(buf)
+  if vim.bo[buf].buftype == "" and file ~= "" then
+    return Snacks.git.get_root(file) or vim.fn.getcwd()
+  end
+  return vim.fn.getcwd()
+end
+
+local function history_options()
+  return {
+    cwd = project_cwd(),
+    confirm = function(picker, item)
+      if not item or not item.commit or not item.cwd then
+        Snacks.notify.warn("No commit selected", { title = "Git history" })
+        return
+      end
+      picker:close()
+      require("lazy").load({ plugins = { "diffview.nvim" } })
+      local args = { "-C" .. item.cwd, item.commit .. "^!" }
+      if item.file then
+        vim.list_extend(args, { "--", item.file })
+      end
+      require("diffview").open(args)
+    end,
+    win = {
+      input = {
+        keys = {
+          ["<C-y>"] = { "git_checkout", mode = { "n", "i" }, desc = "Checkout selected commit/file" },
+        },
+      },
+    },
+  }
+end
+
 local function toggle_terminal()
   local buf = vim.api.nvim_get_current_buf()
   if vim.bo[buf].buftype == "terminal" then
@@ -41,6 +76,13 @@ return {
 
     picker = {
       enabled = true,
+      sources = {
+        files = { hidden = true, ignored = false },
+        grep = { hidden = true, ignored = false },
+        grep_word = { hidden = true, ignored = false },
+        smart = { hidden = true, ignored = false },
+        projects = { dev = { "~/Code" } },
+      },
       layout = {
         preset = "telescope",
         cycle = true
@@ -143,6 +185,7 @@ return {
       "<leader>ss",
       function()
         Snacks.picker.files({
+          cwd = project_cwd(),
           finder = "files",
           format = "file",
           show_empty = true,
@@ -184,33 +227,28 @@ return {
     {
       "<leader>sb",
       function()
-        Snacks.picker.git_branches()
+        Snacks.picker.git_branches({ cwd = project_cwd() })
       end,
       desc = "[S]earch Git [B]ranches"
     },
     {
       "<leader>sl",
       function()
-        Snacks.picker.git_log({
-          finder = "git_log",
-          format = "git_log",
-          preview = "git_show",
-          confirm = "git_checkout",
-        })
+        Snacks.picker.git_log(history_options())
       end,
       desc = "[S]earch Git Log (l)"
     },
     {
       "<leader>sf",
       function()
-        Snacks.picker.git_log_file()
+        Snacks.picker.git_log_file(history_options())
       end,
       desc = "[S]earch Git [F]ile History"
     },
     {
       "<leader>sL",
       function()
-        Snacks.picker.git_log_line()
+        Snacks.picker.git_log_line(history_options())
       end,
       desc = "[S]earch Git Line History (Shift+L)"
     },
@@ -224,7 +262,7 @@ return {
     {
       "<leader>sg",
       function()
-        Snacks.picker.grep()
+        Snacks.picker.grep({ cwd = project_cwd() })
       end,
       desc = "[S]earch [G]rep"
     },
@@ -280,7 +318,7 @@ return {
     {
       "<leader>sS",
       function()
-        Snacks.picker.smart()
+        Snacks.picker.smart({ cwd = project_cwd() })
       end,
       desc = "Smart file search (Shift+S)"
     },
@@ -294,7 +332,7 @@ return {
     {
       "<leader>sw",
       function()
-        Snacks.picker.grep_word()
+        Snacks.picker.grep_word({ cwd = project_cwd() })
       end,
       desc = "Search word under cursor (w)"
     },
