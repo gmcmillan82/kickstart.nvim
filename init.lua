@@ -19,6 +19,7 @@ require('lazy').setup({
   require 'plugins.lualine',
   require 'plugins.misc',
   require 'plugins.neotree',
+  require 'plugins.neogit',
   require 'plugins.oil',
   require 'plugins.snacks',
   require 'plugins.nvim-treesitter',

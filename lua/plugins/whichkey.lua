@@ -46,6 +46,7 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>g', group = '[G]it', mode = { 'n', 'x' } },
       { '<leader>gd', group = '[D]iffview', mode = { 'n', 'x' } },
       { '<leader>r', group = '[R]ename' },
+      { '<leader>n', group = '[N]eogit' },
       { '<leader>s', group = '[S]earch' },
       { '<leader>w', group = '[W]orkspace' },
       { '<leader>t', group = '[T]oggle' },
