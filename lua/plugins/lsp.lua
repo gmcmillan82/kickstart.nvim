@@ -271,14 +271,17 @@ return { -- LSP Configuration & Plugins
               validateYaml = true,
               enable = true,
             },
-            debug = true
+            debug = false
           }
         },
         filetypes = { 'helm' },
         cmd = { "helm_ls", "serve" }
       },
 
-      terraformls = {},
+      terraformls = {
+        -- terraform-ls has no log-level control; keep its verbose trace off LSP stderr.
+        cmd = { 'terraform-ls', 'serve', '-log-file', '/dev/null' },
+      },
 
       bashls = {
         cmd = { 'bash-language-server', 'start' },
