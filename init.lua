@@ -20,7 +20,6 @@ require('lazy').setup({
   require 'plugins.lint',
   require 'plugins.lualine',
   require 'plugins.misc',
-  require 'plugins.neotree',
   require 'plugins.neogit',
   require 'plugins.oil',
   require 'plugins.snacks',

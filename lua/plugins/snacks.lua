@@ -57,6 +57,7 @@ return {
     bigfile = { enabled = true },
     dashboard = { enabled = true },
     debug = { enabled = true },
+    explorer = { enabled = true, replace_netrw = false },
     indent = {
       enabled = true,
       chunk = {
@@ -73,10 +74,12 @@ return {
     terminal = { enabled = true },
     words = { enabled = true },
     gh = { enabled = true },
+    toggle = { enabled = true },
 
     picker = {
       enabled = true,
       sources = {
+        explorer = { hidden = true, ignored = false },
         files = { hidden = true, ignored = false },
         grep = { hidden = true, ignored = false },
         grep_word = { hidden = true, ignored = false },
@@ -94,6 +97,13 @@ return {
     },
   },
   keys = {
+    {
+      "\\",
+      function()
+        Snacks.explorer({ cwd = project_cwd() })
+      end,
+      desc = "Snacks Explorer (Shift+E)"
+    },
     {
       "<leader>tt",
       toggle_terminal,
