@@ -17,6 +17,15 @@ return {
 
     require('bufferline').setup {
       options = {
+        offsets = {
+          { filetype = 'snacks_layout_box' },
+          {
+            filetype = 'neo-tree',
+            text = 'Neo-tree',
+            highlight = 'Directory',
+            text_align = 'left',
+          },
+        },
         mode = 'buffers', -- set to "tabs" to only show tabpages instead
         themable = true, -- allows highlight groups to be overriden i.e. sets highlights as default
         numbers = 'none', -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
@@ -39,7 +48,7 @@ return {
         persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
         separator_style = { '│', '│' }, -- | "thick" | "thin" | { 'any', 'any' },
         enforce_regular_tabs = true,
-        always_show_bufferline = true,
+        always_show_bufferline = false,
         show_tab_indicators = false,
         indicator = {
           -- icon = '▎', -- this should be omitted if indicator style is not 'icon'
@@ -47,7 +56,7 @@ return {
         },
         groups = {
           items = {
-            require('bufferline.groups').builtin.pinned:with({ icon = '󰐃' }),
+            require('bufferline.groups').builtin.pinned:with { icon = '󰐃' },
           },
         },
         sort_by = 'insert_at_end',

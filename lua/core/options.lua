@@ -42,3 +42,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.diagnostic.config {
+  virtual_text = {
+    spacing = 4,
+    source = 'if_many',
+    prefix = '●',
+  },
+  severity_sort = true,
+}

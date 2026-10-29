@@ -57,7 +57,10 @@ return {
     bigfile = { enabled = true },
     dashboard = { enabled = true },
     debug = { enabled = true },
-    explorer = { enabled = true, replace_netrw = false },
+    explorer = {
+      enabled = true,
+      replace_netrw = false,
+    },
     indent = {
       enabled = true,
       chunk = {
@@ -79,7 +82,11 @@ return {
     picker = {
       enabled = true,
       sources = {
-        explorer = { hidden = true, ignored = false },
+        explorer = {
+          hidden = true,
+          ignored = false,
+          layout = { cycle = false },
+        },
         files = { hidden = true, ignored = false },
         grep = { hidden = true, ignored = false },
         grep_word = { hidden = true, ignored = false },
