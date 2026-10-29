@@ -8,7 +8,7 @@ return {
     { '<leader>>', '<cmd>BufferLineMoveNext<CR>', desc = 'Move buffer right' },
   },
   dependencies = {
-    'nvim-tree/nvim-web-devicons',
+    'echasnovski/mini.nvim',
   },
   config = function()
     local function close_buffer(bufnr)
@@ -40,6 +40,11 @@ return {
         max_prefix_length = 30, -- prefix used when a buffer is de-duplicated
         tab_size = 21,
         diagnostics = 'nvim_lsp',
+        diagnostics_indicator = function(_, _, diagnostics)
+          local icons = require('core.icons').diagnostics
+          return (diagnostics.error and icons.Error .. diagnostics.error .. ' ' or '')
+            .. (diagnostics.warning and icons.Warn .. diagnostics.warning or '')
+        end,
         diagnostics_update_in_insert = false,
         color_icons = true,
         show_buffer_icons = true,

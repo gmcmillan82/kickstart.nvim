@@ -81,6 +81,10 @@ return {
 
     picker = {
       enabled = true,
+      icons = {
+        diagnostics = require("core.icons").diagnostics,
+        kinds = require("core.icons").kinds,
+      },
       sources = {
         explorer = {
           hidden = true,

@@ -1,6 +1,7 @@
 return {
   'nvim-lualine/lualine.nvim',
   config = function()
+    local icons = require 'core.icons'
     local mode = {
       'mode',
       fmt = function(str)
@@ -24,7 +25,12 @@ return {
       'diagnostics',
       sources = { 'nvim_diagnostic' },
       sections = { 'error', 'warn' },
-      symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+      symbols = {
+        error = icons.diagnostics.Error,
+        warn = icons.diagnostics.Warn,
+        info = icons.diagnostics.Info,
+        hint = icons.diagnostics.Hint,
+      },
       colored = false,
       update_in_insert = false,
       always_visible = false,
@@ -33,7 +39,7 @@ return {
     local diff = {
       'diff',
       colored = false,
-      symbols = { added = ' ', modified = ' ', removed = ' ' }, -- changes diff symbols
+      symbols = icons.git,
       cond = hide_in_width,
     }
 

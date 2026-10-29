@@ -56,7 +56,24 @@ return {
   },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
+    init = function()
+      -- Keep plugins expecting web-devicons on the same icon provider.
+      package.preload['nvim-web-devicons'] = function()
+        require('mini.icons').mock_nvim_web_devicons()
+        return package.loaded['nvim-web-devicons']
+      end
+    end,
     config = function()
+      require('mini.icons').setup {
+        file = {
+          ['.keep'] = { glyph = '󰊢', hl = 'MiniIconsGrey' },
+          ['devcontainer.json'] = { glyph = '', hl = 'MiniIconsAzure' },
+        },
+        filetype = {
+          dotenv = { glyph = '', hl = 'MiniIconsYellow' },
+        },
+      }
+
       -- Better Around/Inside textobjects
       --
       -- Examples:

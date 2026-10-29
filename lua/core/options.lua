@@ -43,6 +43,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.diagnostic.config {
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = require('core.icons').diagnostics.Error,
+      [vim.diagnostic.severity.WARN] = require('core.icons').diagnostics.Warn,
+      [vim.diagnostic.severity.HINT] = require('core.icons').diagnostics.Hint,
+      [vim.diagnostic.severity.INFO] = require('core.icons').diagnostics.Info,
+    },
+  },
   virtual_text = {
     spacing = 4,
     source = 'if_many',

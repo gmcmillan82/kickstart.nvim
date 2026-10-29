@@ -48,6 +48,15 @@ return { -- Autocompletion
         end,
       },
       completion = { completeopt = 'menu,menuone,noinsert' },
+      formatting = {
+        format = function(_, item)
+          local icon = require('core.icons').kinds[item.kind]
+          if icon then
+            item.kind = icon .. item.kind
+          end
+          return item
+        end,
+      },
 
       -- For an understanding of why these mappings were
       -- chosen, you will need to read `:help ins-completion`

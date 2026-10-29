@@ -1,6 +1,10 @@
 return {
   'folke/trouble.nvim',
-  opts = {},
+  opts = {
+    icons = {
+      kinds = require('core.icons').kinds,
+    },
+  },
   cmd = 'Trouble',
   keys = {
     {
